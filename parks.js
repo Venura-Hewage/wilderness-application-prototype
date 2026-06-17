@@ -55,28 +55,9 @@ function displayData(data) {
     " " +
     data[0].addresses[0].countryCode;
 
-  // for (let index = 0; index < data.length; index++) {
-  //   console.log(data[index].description);
-  //   console.log(data[index].name);
-
-  //   console.log(data[index].images[0].url);
   // }
 }
 
-// function displayPark() {
-
-//   try {
-//     const data = await fetch( `https://developer.nps.gov/api/v1/parks?parkCode=${park}&api_key=GCXOTF0JIuC5ZmdRXUcceCboJXXlKFPN9Yd14DOD`);
-
-//     const json = await data.json();
-//   }
-//   catch (error) {
-
-//  console.log(error);
-
-//   }
-
-// }
 // when a pagination button is clicked -> search for park
 // create onClick event for all pagination buttons
 // the evert then passes the pagination button value, ie the park, to the fetch function
