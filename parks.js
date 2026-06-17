@@ -67,16 +67,12 @@ function displayData(data) {
 async function getEvents() {
   try {
     console.log("This is the current park" + " " + currentParkcode);
-    const data = await fetch(
-      `https://developer.nps.gov/api/v1/events?parkCode=${currentParkcode}&api_key=GCXOTF0JIuC5ZmdRXUcceCboJXXlKFPN9Yd14DOD`,
-      {
-        headers: {
-          "X-Api-Key": "GCXOTF0JIuC5ZmdRXUcceCboJXXlKFPN9Yd14DOD",
-        },
-      },
+    const response = await fetch(
+      `http://localhost:3000/events?parkCode=${currentParkcode}`,
     );
-    const json = await data.json();
+    const json = await response.json();
     console.log(json);
+    console.log("EVENT RESPONSE:", json);
     displayEvents(json.data);
   } catch (error) {
     console.log(error);
@@ -84,12 +80,15 @@ async function getEvents() {
 }
 
 function displayEvents(data) {
+  const parkcard = document.getElementById("parkCard");
   let accordion = document.createElement("div");
+  parkcard.replaceWith(accordion);
+
   accordion.className = "accordion";
   accordion.id = "featureaccordion";
 
   let limit = 3;
-  data.slice(0, 3).array.forEach((element) => {
+  data.slice(0, 3).forEach((element, index) => {
     let accordionItem = document.createElement("div");
     accordionItem.className = "accordian-item";
 
@@ -108,7 +107,7 @@ function displayEvents(data) {
     button.setAttribute("aria-expanded", index === 0 ? "true" : "false");
     button.setAttribute("aria-controls", `collapse${index}`);
 
-    button.textContent = item.title;
+    button.textContent = accordionItem.title;
 
     // collapse container
     const collapse = document.createElement("div");
@@ -125,7 +124,7 @@ function displayEvents(data) {
     // accordion body
     const body = document.createElement("div");
     body.className = "accordion-body";
-    body.textContent = item.content;
+    body.textContent = accordionItem.content;
 
     // assemble
     collapse.appendChild(body);
