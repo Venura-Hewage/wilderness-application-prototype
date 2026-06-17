@@ -3,6 +3,7 @@ const parkName = document.getElementById("parkName");
 const parkDesc = document.getElementById("parkDescription");
 const parkAddress = document.getElementById("parkAddress");
 const btn = document.getElementById("pagebutton");
+let currentParkcode = "abli";
 
 // btn.addEventListener("click", (event) => {
 //   const parkCode = event.target.value;
@@ -10,6 +11,7 @@ const btn = document.getElementById("pagebutton");
 // });
 
 async function loadNewPark(parkCode) {
+  currentParkcode = parkCode;
   try {
     // https://developer.nps.gov/api/v1/parks?parkCode=acad&api_key=GCXOTF0JIuC5ZmdRXUcceCboJXXlKFPN9Yd14DOD
     //
@@ -81,10 +83,11 @@ function displayData(data) {
 // when we find the newPark, replace data with newPark.data
 // we do this by assigning innerHTML and attributes to the ids
 
-async function getEvents(parkcode) {
+async function getEvents() {
   try {
+    console.log("This is the current park" + " " + currentParkcode);
     const data = await fetch(
-      `https://developer.nps.gov/api/v1/events?parkCode=${parkcode}&api_key=GCXOTF0JIuC5ZmdRXUcceCboJXXlKFPN9Yd14DOD`,
+      `https://developer.nps.gov/api/v1/events?parkCode=${currentParkcode}&api_key=GCXOTF0JIuC5ZmdRXUcceCboJXXlKFPN9Yd14DOD`,
     );
     const json = await data.json();
     console.log(json);
@@ -94,6 +97,59 @@ async function getEvents(parkcode) {
   }
 }
 
-function displayEvents(data) {}
+function displayEvents(data) {
+  let accordion = document.createElement("div");
+  accordion.className = "accordion";
+  accordion.id = "featureaccordion";
+
+  let limit = 3;
+  data.slice(0, 3).array.forEach((element) => {
+    let accordionItem = document.createElement("div");
+    accordionItem.className = "accordian-item";
+
+    let header = document.createElement("h2");
+    header.className = "accordian-header";
+    header.id = `heading${index}`;
+
+    // button
+    const button = document.createElement("button");
+    button.className =
+      index === 0 ? "accordion-button" : "accordion-button collapsed";
+
+    button.type = "button";
+    button.setAttribute("data-bs-toggle", "collapse");
+    button.setAttribute("data-bs-target", `#collapse${index}`);
+    button.setAttribute("aria-expanded", index === 0 ? "true" : "false");
+    button.setAttribute("aria-controls", `collapse${index}`);
+
+    button.textContent = item.title;
+
+    // collapse container
+    const collapse = document.createElement("div");
+    collapse.id = `collapse${index}`;
+
+    collapse.className =
+      index === 0
+        ? "accordion-collapse collapse show"
+        : "accordion-collapse collapse";
+
+    collapse.setAttribute("aria-labelledby", `heading${index}`);
+    collapse.setAttribute("data-bs-parent", "#myAccordion");
+
+    // accordion body
+    const body = document.createElement("div");
+    body.className = "accordion-body";
+    body.textContent = item.content;
+
+    // assemble
+    collapse.appendChild(body);
+    header.appendChild(button);
+
+    accordionItem.appendChild(header);
+    accordionItem.appendChild(collapse);
+
+    accordion.appendChild(accordionItem);
+  });
+}
 
 load();
