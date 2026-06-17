@@ -69,6 +69,11 @@ async function getEvents() {
     console.log("This is the current park" + " " + currentParkcode);
     const data = await fetch(
       `https://developer.nps.gov/api/v1/events?parkCode=${currentParkcode}&api_key=GCXOTF0JIuC5ZmdRXUcceCboJXXlKFPN9Yd14DOD`,
+      {
+        headers: {
+          "X-Api-Key": "GCXOTF0JIuC5ZmdRXUcceCboJXXlKFPN9Yd14DOD",
+        },
+      },
     );
     const json = await data.json();
     console.log(json);
