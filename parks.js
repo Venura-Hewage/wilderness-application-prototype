@@ -1,7 +1,7 @@
 const parkImg = document.getElementById("parkImg");
-const parkName = document.getElementById("parkName");
-const parkDesc = document.getElementById("parkDescription");
-const parkAddress = document.getElementById("parkAddress");
+//const parkName = document.getElementById("parkName");
+//const parkDesc = document.getElementById("parkDescription");
+//const parkAddress = document.getElementById("parkAddress");
 const btn = document.getElementById("pagebutton");
 let currentParkcode = "abli";
 
@@ -12,6 +12,7 @@ let currentParkcode = "abli";
 
 async function loadNewPark(parkCode) {
   currentParkcode = parkCode;
+
   try {
     // https://developer.nps.gov/api/v1/parks?parkCode=acad&api_key=GCXOTF0JIuC5ZmdRXUcceCboJXXlKFPN9Yd14DOD
     //
@@ -46,14 +47,32 @@ function displayData(data) {
   parkImg.setAttribute("src", data[0].images[0].url);
   parkImg.setAttribute("alt", data[0].images[0].altText);
 
-  parkName.innerHTML = data[0].name;
-  parkDesc.innerHTML = data[0].description;
-  parkAddress.innerHTML =
+  const card = document.getElementById("parkCard");
+  card.innerHTML = "";
+
+  card.className = "card-body";
+
+  const title = document.createElement("h5");
+  title.className = "card-title";
+
+  const description = document.createElement("p");
+  description.className = "card-text";
+
+  const address = document.createElement("p");
+  address.className = "card-text small text-muted";
+
+  title.innerHTML = data[0].name;
+  description.innerHTML = data[0].description;
+  address.innerHTML =
     data[0].addresses[0].line1 +
     " " +
     data[0].addresses[0].city +
     " " +
     data[0].addresses[0].countryCode;
+
+  card.appendChild(title);
+  card.appendChild(description);
+  card.appendChild(address);
 
   // }
 }
@@ -81,19 +100,20 @@ async function getEvents() {
 
 function displayEvents(data) {
   const parkcard = document.getElementById("parkCard");
+  parkcard.innerHTML = "";
   let accordion = document.createElement("div");
-  parkcard.replaceWith(accordion);
+  parkcard.appendChild(accordion);
 
   accordion.className = "accordion";
   accordion.id = "featureaccordion";
 
   let limit = 3;
-  data.slice(0, 3).forEach((element, index) => {
+  data.slice(0, 3).forEach((item, index) => {
     let accordionItem = document.createElement("div");
-    accordionItem.className = "accordian-item";
+    accordionItem.className = "accordion-item";
 
     let header = document.createElement("h2");
-    header.className = "accordian-header";
+    header.className = "accordion-header";
     header.id = `heading${index}`;
 
     // button
@@ -107,7 +127,7 @@ function displayEvents(data) {
     button.setAttribute("aria-expanded", index === 0 ? "true" : "false");
     button.setAttribute("aria-controls", `collapse${index}`);
 
-    button.textContent = accordionItem.title;
+    button.textContent = item.title;
 
     // collapse container
     const collapse = document.createElement("div");
@@ -124,7 +144,7 @@ function displayEvents(data) {
     // accordion body
     const body = document.createElement("div");
     body.className = "accordion-body";
-    body.textContent = accordionItem.content;
+    body.innerHTML = item.description;
 
     // assemble
     collapse.appendChild(body);
