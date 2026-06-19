@@ -1,8 +1,11 @@
 import express from "express";
 import fetch from "node-fetch";
 import cors from "cors";
+import APIGen from "./api.js";
 
 const app = express();
+
+const api = new APIGen();
 
 // allow your frontend origin
 app.use(
@@ -33,69 +36,35 @@ app.get("/places", async (req, res) => {
 
 app.get("/campgrounds", async (req, res) => {
   try {
-    const url = `https://developer.nps.gov/api/v1/campgrounds?parkCode=${req.query.parkCode}&api_key=GCXOTF0JIuC5ZmdRXUcceCboJXXlKFPN9Yd14DOD`;
-
-    const response = await fetch(url, {
-      headers: {
-        "User-Agent": "wilderness-app/1.0",
-        Accept: "application/json",
-      },
+    const response = await api.sendQuery("campgrounds", {
+      parkCode: req.query.parkCode,
     });
 
-    const contentType = response.headers.get("content-type");
-    const text = await response.text();
+    const data = await response.json();
 
-    console.log("STATUS:", response.status);
-
-    console.log("FINAL URL =>", JSON.stringify(url));
-
-    if (!contentType || !contentType.includes("application/json")) {
-      return res.status(500).json({
-        error: "NPS did not return JSON",
-        rawPreview: text.slice(0, 200),
-      });
-    }
-
-    const data = JSON.parse(text);
-
-    return res.json(data);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: err.message });
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: error.message,
+    });
   }
 });
 
 app.get("/thingstodo", async (req, res) => {
   try {
-    const url = `https://developer.nps.gov/api/v1/thingstodo?parkCode=${req.query.parkCode}&api_key=GCXOTF0JIuC5ZmdRXUcceCboJXXlKFPN9Yd14DOD`;
-
-    const response = await fetch(url, {
-      headers: {
-        "User-Agent": "wilderness-app/1.0",
-        Accept: "application/json",
-      },
+    const response = await api.sendQuery("thingstodo", {
+      parkCode: req.query.parkCode,
     });
 
-    const contentType = response.headers.get("content-type");
-    const text = await response.text();
+    const data = await response.json();
 
-    console.log("STATUS:", response.status);
-
-    console.log("FINAL URL =>", JSON.stringify(url));
-
-    if (!contentType || !contentType.includes("application/json")) {
-      return res.status(500).json({
-        error: "NPS did not return JSON",
-        rawPreview: text.slice(0, 200),
-      });
-    }
-
-    const data = JSON.parse(text);
-
-    return res.json(data);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: err.message });
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: error.message,
+    });
   }
 });
 
