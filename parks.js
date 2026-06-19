@@ -98,6 +98,303 @@ async function getEvents() {
   }
 }
 
+async function getPlaces() {
+  try {
+    console.log("This is the current park" + " " + currentParkcode);
+    const response = await fetch(
+      `http://localhost:3000/places?parkCode=${currentParkcode}`,
+    );
+    const json = await response.json();
+    console.log(json);
+    console.log("EVENT RESPONSE:", json);
+    displayPlaces(json.data);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function displayPlaces() {
+  const parkcard = document.getElementById("parkCard");
+  parkcard.innerHTML = "";
+  let accordion = document.createElement("div");
+  parkcard.appendChild(accordion);
+
+  accordion.className = "accordion";
+  accordion.id = "featureaccordion";
+
+  let limit = 3;
+  data.slice(0, 3).forEach((item, index) => {
+    let accordionItem = document.createElement("div");
+    accordionItem.className = "accordion-item";
+
+    let header = document.createElement("h2");
+    header.className = "accordion-header";
+    header.id = `heading${index}`;
+
+    // button
+    const button = document.createElement("button");
+    button.className =
+      index === 0 ? "accordion-button" : "accordion-button collapsed";
+
+    button.type = "button";
+    button.setAttribute("data-bs-toggle", "collapse");
+    button.setAttribute("data-bs-target", `#collapse${index}`);
+    button.setAttribute("aria-expanded", index === 0 ? "true" : "false");
+    button.setAttribute("aria-controls", `collapse${index}`);
+
+    button.textContent = item.title;
+
+    // collapse container
+    const collapse = document.createElement("div");
+    collapse.id = `collapse${index}`;
+
+    collapse.className =
+      index === 0
+        ? "accordion-collapse collapse show"
+        : "accordion-collapse collapse";
+
+    collapse.setAttribute("aria-labelledby", `heading${index}`);
+    collapse.setAttribute("data-bs-parent", "#myAccordion");
+
+    // accordion body
+    const body = document.createElement("div");
+    body.className = "accordion-body";
+    body.innerHTML = item.listingDescription;
+
+    // assemble
+    collapse.appendChild(body);
+    header.appendChild(button);
+
+    accordionItem.appendChild(header);
+    accordionItem.appendChild(collapse);
+
+    accordion.appendChild(accordionItem);
+  });
+}
+
+async function getAmenities() {
+  try {
+    console.log("This is the current park" + " " + currentParkcode);
+    const response = await fetch(
+      `http://localhost:3000/amenities?parkCode=${currentParkcode}`,
+    );
+    const json = await response.json();
+    console.log(json);
+    console.log("EVENT RESPONSE:", json);
+    displayAmenities(json.data);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function getCampgrounds() {
+  try {
+    console.log("This is the current park" + " " + currentParkcode);
+    const response = await fetch(
+      `http://localhost:3000/campgrounds?parkCode=${currentParkcode}`,
+    );
+    const json = await response.json();
+    console.log(json);
+    console.log("EVENT RESPONSE:", json);
+    displayCampGrounds(json.data);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function getThingstoDo() {
+  try {
+    console.log("This is the current park" + " " + currentParkcode);
+    const response = await fetch(
+      `http://localhost:3000/thingstodo?parkCode=${currentParkcode}`,
+    );
+    const json = await response.json();
+    console.log(json);
+    console.log("EVENT RESPONSE:", json);
+    displayThingsToDo(json.data);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function displayThingsToDo(data) {
+  const parkcard = document.getElementById("parkCard");
+  parkcard.innerHTML = "";
+  let accordion = document.createElement("div");
+  parkcard.appendChild(accordion);
+
+  accordion.className = "accordion";
+  accordion.id = "featureaccordion";
+
+  let limit = 3;
+  data.slice(0, 3).forEach((item, index) => {
+    let accordionItem = document.createElement("div");
+    accordionItem.className = "accordion-item";
+
+    let header = document.createElement("h2");
+    header.className = "accordion-header";
+    header.id = `heading${index}`;
+
+    // button
+    const button = document.createElement("button");
+    button.className =
+      index === 0 ? "accordion-button" : "accordion-button collapsed";
+
+    button.type = "button";
+    button.setAttribute("data-bs-toggle", "collapse");
+    button.setAttribute("data-bs-target", `#collapse${index}`);
+    button.setAttribute("aria-expanded", index === 0 ? "true" : "false");
+    button.setAttribute("aria-controls", `collapse${index}`);
+
+    button.textContent = item.title;
+
+    // collapse container
+    const collapse = document.createElement("div");
+    collapse.id = `collapse${index}`;
+
+    collapse.className =
+      index === 0
+        ? "accordion-collapse collapse show"
+        : "accordion-collapse collapse";
+
+    collapse.setAttribute("aria-labelledby", `heading${index}`);
+    collapse.setAttribute("data-bs-parent", "#myAccordion");
+
+    // accordion body
+    const body = document.createElement("div");
+    body.className = "accordion-body";
+    body.innerHTML = item.shortDescription;
+
+    // assemble
+    collapse.appendChild(body);
+    header.appendChild(button);
+
+    accordionItem.appendChild(header);
+    accordionItem.appendChild(collapse);
+
+    accordion.appendChild(accordionItem);
+  });
+}
+
+function displayCampGrounds(data) {
+  const parkcard = document.getElementById("parkCard");
+  parkcard.innerHTML = "";
+  let accordion = document.createElement("div");
+  parkcard.appendChild(accordion);
+
+  accordion.className = "accordion";
+  accordion.id = "featureaccordion";
+
+  let limit = 3;
+  data.slice(0, 3).forEach((item, index) => {
+    let accordionItem = document.createElement("div");
+    accordionItem.className = "accordion-item";
+
+    let header = document.createElement("h2");
+    header.className = "accordion-header";
+    header.id = `heading${index}`;
+
+    // button
+    const button = document.createElement("button");
+    button.className =
+      index === 0 ? "accordion-button" : "accordion-button collapsed";
+
+    button.type = "button";
+    button.setAttribute("data-bs-toggle", "collapse");
+    button.setAttribute("data-bs-target", `#collapse${index}`);
+    button.setAttribute("aria-expanded", index === 0 ? "true" : "false");
+    button.setAttribute("aria-controls", `collapse${index}`);
+
+    button.textContent = item.name;
+
+    // collapse container
+    const collapse = document.createElement("div");
+    collapse.id = `collapse${index}`;
+
+    collapse.className =
+      index === 0
+        ? "accordion-collapse collapse show"
+        : "accordion-collapse collapse";
+
+    collapse.setAttribute("aria-labelledby", `heading${index}`);
+    collapse.setAttribute("data-bs-parent", "#myAccordion");
+
+    // accordion body
+    const body = document.createElement("div");
+    body.className = "accordion-body";
+    body.innerHTML = item.description;
+
+    // assemble
+    collapse.appendChild(body);
+    header.appendChild(button);
+
+    accordionItem.appendChild(header);
+    accordionItem.appendChild(collapse);
+
+    accordion.appendChild(accordionItem);
+  });
+}
+
+function displayAmenities(data) {
+  const parkcard = document.getElementById("parkCard");
+  parkcard.innerHTML = "";
+  let accordion = document.createElement("div");
+  parkcard.appendChild(accordion);
+
+  accordion.className = "accordion";
+  accordion.id = "featureaccordion";
+
+  let limit = 3;
+  data.slice(0, 3).forEach((item, index) => {
+    console.log("This is an Array or not" + "= " + Array.isArray(item));
+    let accordionItem = document.createElement("div");
+    accordionItem.className = "accordion-item";
+
+    let header = document.createElement("h2");
+    header.className = "accordion-header";
+    header.id = `heading${index}`;
+
+    // button
+    const button = document.createElement("button");
+    button.className =
+      index === 0 ? "accordion-button" : "accordion-button collapsed";
+
+    button.type = "button";
+    button.setAttribute("data-bs-toggle", "collapse");
+    button.setAttribute("data-bs-target", `#collapse${index}`);
+    button.setAttribute("aria-expanded", index === 0 ? "true" : "false");
+    button.setAttribute("aria-controls", `collapse${index}`);
+
+    button.textContent = item[0].name;
+
+    // collapse container
+    const collapse = document.createElement("div");
+    collapse.id = `collapse${index}`;
+
+    collapse.className =
+      index === 0
+        ? "accordion-collapse collapse show"
+        : "accordion-collapse collapse";
+
+    collapse.setAttribute("aria-labelledby", `heading${index}`);
+    collapse.setAttribute("data-bs-parent", "#myAccordion");
+
+    // accordion body
+    const body = document.createElement("div");
+    body.className = "accordion-body";
+    body.innerHTML = item[0].parks[0].places[0].title;
+
+    // assemble
+    collapse.appendChild(body);
+    header.appendChild(button);
+
+    accordionItem.appendChild(header);
+    accordionItem.appendChild(collapse);
+
+    accordion.appendChild(accordionItem);
+  });
+}
+
 function displayEvents(data) {
   const parkcard = document.getElementById("parkCard");
   parkcard.innerHTML = "";
