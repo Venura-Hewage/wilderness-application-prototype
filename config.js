@@ -7,4 +7,3 @@ const CONFIG = {
 
   apiUrl: "https://developer.nps.gov/api/v1",
 };
-export default CONFIG;
