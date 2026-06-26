@@ -110,8 +110,8 @@ async function getAmenities() {
       parkCode: currentParkcode,
     });
 
-    const json = await response.json();
-
+    //const json = await response.json();
+    const json = response.data;
     //res.json(data);
 
     console.log(json);
@@ -128,7 +128,8 @@ async function getCampgrounds() {
       parkCode: currentParkcode,
     });
 
-    const json = await response.json();
+    // const json = await response.json();
+    const json = response.data;
 
     //res.json(data);
 
@@ -146,7 +147,8 @@ async function getThingstoDo() {
       parkCode: currentParkcode,
     });
 
-    const json = await response.json();
+    // const json = await response.json();
+    const json = response.data;
 
     //res.json(data);
 

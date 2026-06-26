@@ -19,17 +19,16 @@ class APIGen {
   async sendQuery(endpoint, params = {}) {
     const url = new URL(`${this.apiUrl}/${endpoint}`);
 
-    Object.entries(params).forEach(([key, value]) => {
-      url.searchParams.append(key, value);
-    });
-
-    url.searchParams.append("api_key", this.apiKey);
-
     console.log("FINAL URL:", url);
-    const response = await fetch(url, {
+    const response = await axios.get(url.toString(), {
       headers: {
         "User-Agent": "wilderness-app/1.0",
         Accept: "application/json",
+      },
+
+      params: {
+        parkCode: params.parkCode,
+        api_key: this.apiKey,
       },
     });
 
