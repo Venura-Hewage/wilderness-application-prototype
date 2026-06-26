@@ -1,21 +1,13 @@
-//* api.js — defines the PixabayAPI class used to fetch images from the Pixabay API.
-//? A class is a blueprint for creating objects with shared properties and methods.
-//~ PixabayAPI groups everything needed to communicate with the Pixabay API in one place.
-//! REMOVED API KEY - USE PERSONAL KEY IF UTILISING DEMO
-//import axios from "axios";
-
 class APIGen {
-  //? It stores the API key and URL from CONFIG so every method can access them via "this".
   constructor() {
-    // Member: stores the API key used to authenticate every request sent.
+    // our api key is accessed from the config class.
     this.apiKey = CONFIG.apiKey;
-    // Member: stores the base URL that all API requests are sent to.
+    // our api url is  accessed from the config class.
     this.apiUrl = CONFIG.apiUrl;
   }
 
-  // Method: searchImages — sends a request to Pixabay and returns matching image data.
-  // @param query — the word or phrase to search for (e.g. "cats"). Typed by the user.
-  // @param page  — which page of results to load. Defaults to 1 (the first page).
+  // Sends a request to a  NPS  endpoint with the the parkcode as its query.
+
   async sendQuery(endpoint, params = {}) {
     const url = new URL(`${this.apiUrl}/${endpoint}`);
 
@@ -35,6 +27,10 @@ class APIGen {
     return response;
   }
 
+  // Sends a request to a  NPS  endpoint with the the parkcode as its query.
+  //temporary access to demo the events endpoint which doesn't work with normal requests from the browser because it doesn't have a cors header.
+  //proxy workaround used however requries that the button has to be clicked in the proxy site for the demo
+  //to work
   async AltsendQuery(endpoint, params = {}) {
     const proxy = "https://cors-anywhere.herokuapp.com/";
 
